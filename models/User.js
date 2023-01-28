@@ -24,32 +24,6 @@ const userSchema = mongoose.Schema(
     password: {
       type: String,
       required: [true, "Password is required"],
-      validate: {
-        validator: (value) =>
-          validator.isStrongPassword(value, {
-            minLength: 6,
-            minLowercase: 1,
-            minNumbers: 1,
-            minUppercase: 1,
-            minSymbols: 1,
-          }),
-        message: "Password {VALUE} is not strong enough.",
-      },
-    },
-    confirmPassword: {
-      type: String,
-      required: [true, "Confirm Password is required"],
-      validate: {
-        validator: (value) =>
-          validator.isStrongPassword(value, {
-            minLength: 6,
-            minLowercase: 1,
-            minNumbers: 1,
-            minUppercase: 1,
-            minSymbols: 1,
-          }),
-        message: "Password {VALUE} is not strong enough.",
-      },
     },
 
     role: {
@@ -87,13 +61,12 @@ const userSchema = mongoose.Schema(
     addedBy: {
       name: {
         type: String,
-        validate: [validator.isEmail, "Provide a valid name"],
-        required: [true, "Please provide a employee name"],
+        // required: [true, "Please provide a employee name"],
       },
       id: {
         type: ObjectId,
         ref: "User",
-        required: [true, "Please provide a employee's id"],
+        // required: [true, "Please provide a employee's id"],
       },
     },
     confirmationToken: String,

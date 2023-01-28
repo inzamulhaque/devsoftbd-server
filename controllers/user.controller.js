@@ -7,10 +7,17 @@ const generateToken = require("../utils/token");
 const { statusError } = require("../utils/statusError");
 
 exports.signup = async (req, res) => {
-  const user = await userService.signup(req.body);
-  await user.save({ validateBeforeSave: true });
-  if (!user) throw statusError("No users found!", 404);
-  res.status(200).send({ message: "Successfully signed up" });
+  try {
+    const user = await userService.signup(req.body);
+    // await user.save({ validateBeforeSave: true });
+    if (!user) {
+      return res.status(400).send({ message: "user not create" });
+    }
+    res.status(200).send({ message: "Successfully signed up" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({ message: "user not create" });
+  }
 };
 
 exports.login = async (req, res) => {

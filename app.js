@@ -8,9 +8,11 @@ app.use(cors());
 
 // import routes
 const userRoute = require("./routes/user.route");
+const blogRoute = require("./routes/blog.route");
 
 // routes
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/blog", blogRoute);
 
 app.get("/", (req, res) => {
   res.send("Route is working!");
