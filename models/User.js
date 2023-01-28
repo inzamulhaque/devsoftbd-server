@@ -9,6 +9,7 @@
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema.Types;
 const validator = require("validator");
+const bcrypt = require("bcryptjs");
 
 const userSchema = mongoose.Schema(
   {
@@ -61,12 +62,12 @@ const userSchema = mongoose.Schema(
     addedBy: {
       name: {
         type: String,
-        // required: [true, "Please provide a employee name"],
+        required: [true, "Please provide a employee name"],
       },
       id: {
         type: ObjectId,
         ref: "User",
-        // required: [true, "Please provide a employee's id"],
+        required: [true, "Please provide a employee's id"],
       },
     },
     confirmationToken: String,
@@ -92,7 +93,6 @@ userSchema.methods.generateConfirmationToken = function () {
 
 userSchema.methods.comparePassword = function (password, hash) {
   const isPasswordValid = bcrypt.compareSync(password, hash);
-  console.log(isPasswordValid, password, hash);
   return isPasswordValid;
 };
 

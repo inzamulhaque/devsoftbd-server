@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema.Types;
 const validator = require("validator");
 
-const blogSchema = mongoose.Schema(
+const deleteblogSchema = mongoose.Schema(
   {
     title: {
       type: String,
@@ -81,12 +81,33 @@ const blogSchema = mongoose.Schema(
         },
       },
     ],
+
+    deleteBy: {
+      name: {
+        type: String,
+        required: [true, "name is required"],
+      },
+
+      email: {
+        type: String,
+        validate: [validator.isEmail, "Provide a valid Email"],
+        trim: true,
+        lowercase: true,
+        required: [true, "Email address is required"],
+      },
+
+      id: {
+        type: ObjectId,
+        ref: "User",
+        required: [true, "Please provide a employee's id"],
+      },
+    },
   },
   {
     timestamps: true,
   }
 );
 
-const Blog = mongoose.model("Blog", blogSchema);
+const DeleteBlog = mongoose.model("DeleteBlog", deleteblogSchema);
 
-module.exports = Blog;
+module.exports = DeleteBlog;
