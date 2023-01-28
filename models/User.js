@@ -9,6 +9,7 @@
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema.Types;
 const validator = require("validator");
+const bcrypt = require("bcryptjs");
 
 const userSchema = mongoose.Schema(
   {
@@ -23,7 +24,6 @@ const userSchema = mongoose.Schema(
 
     password: {
       type: String,
-      required: [true, "Password is required"],
       validate: {
         validator: (value) =>
           validator.isStrongPassword(value, {
@@ -36,21 +36,21 @@ const userSchema = mongoose.Schema(
         message: "Password {VALUE} is not strong enough.",
       },
     },
-    confirmPassword: {
-      type: String,
-      required: [true, "Confirm Password is required"],
-      validate: {
-        validator: (value) =>
-          validator.isStrongPassword(value, {
-            minLength: 6,
-            minLowercase: 1,
-            minNumbers: 1,
-            minUppercase: 1,
-            minSymbols: 1,
-          }),
-        message: "Password {VALUE} is not strong enough.",
-      },
-    },
+    // confirmPassword: {
+    //   type: String,
+    //   required: [true, "Confirm Password is required"],
+    //   validate: {
+    //     validator: (value) =>
+    //       validator.isStrongPassword(value, {
+    //         minLength: 6,
+    //         minLowercase: 1,
+    //         minNumbers: 1,
+    //         minUppercase: 1,
+    //         minSymbols: 1,
+    //       }),
+    //     message: "Password {VALUE} is not strong enough.",
+    //   },
+    // },
 
     role: {
       type: String,
@@ -80,7 +80,7 @@ const userSchema = mongoose.Schema(
         "Please provide a valid contact number",
       ],
     },
-    githubURL: {
+    gitURL: {
       type: String,
       validate: [validator.isURL, "Please provide a valid url"],
     },
@@ -88,12 +88,12 @@ const userSchema = mongoose.Schema(
       name: {
         type: String,
         validate: [validator.isEmail, "Provide a valid name"],
-        required: [true, "Please provide a employee name"],
+        // required: [true, "Please provide a employee name"],
       },
       id: {
         type: ObjectId,
         ref: "User",
-        required: [true, "Please provide a employee's id"],
+        // required: [true, "Please provide a employee's id"],
       },
     },
     confirmationToken: String,

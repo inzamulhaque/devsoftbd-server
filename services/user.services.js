@@ -5,6 +5,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
 exports.signup = async (userInfo) => {
+  // console.log(userInfo);
   if (userInfo.password !== userInfo.confirmPassword) {
     return "confirmPassword: Passwords don't match!";
   }
@@ -12,5 +13,10 @@ exports.signup = async (userInfo) => {
   const hashedPassword = bcrypt.hashSync(password);
   userInfo.password = hashedPassword;
   const user = await User.create(userInfo);
+  // console.log(user);
   return user;
+};
+
+exports.findUserByEmail = async (email) => {
+  return await User.findOne({ email });
 };
