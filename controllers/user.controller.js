@@ -8,7 +8,14 @@ const { statusError } = require("../utils/statusError");
 
 exports.signup = async (req, res) => {
   try {
-    const user = await userService.signup(req.body);
+    const { email } = req.user;
+    const addedBy = await userService.findUserByEmail(email);
+
+    if (!addedBy) {
+      return res.status(400).json({ status: false, error: "user not found" });
+    }
+
+    const user = await userService.signup(req.body, addedBy);
     // await user.save({ validateBeforeSave: true });
     if (!user) {
       return res.status(400).send({ message: "user not create" });

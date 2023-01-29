@@ -23,7 +23,19 @@ router
 
 router.get("/:url", verifyApiKey, getBlogByURL);
 
-router.patch("/:url", verifyApiKey, verifyToken, editBlog);
+router.patch(
+  "/:url",
+  verifyApiKey,
+  verifyToken,
+  (req, res, next) => auth(req, res, next, "admin"),
+  editBlog
+);
 
-router.delete("/:url", verifyApiKey, verifyToken, deleteBlogByURL);
+router.delete(
+  "/:url",
+  verifyApiKey,
+  verifyToken,
+  (req, res, next) => auth(req, res, next, "admin"),
+  deleteBlogByURL
+);
 module.exports = router;
