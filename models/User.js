@@ -9,6 +9,7 @@
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema.Types;
 const validator = require("validator");
+// const bcrypt = require("bcryptjs");
 const bcrypt = require("bcryptjs");
 
 const userSchema = mongoose.Schema(
@@ -24,17 +25,7 @@ const userSchema = mongoose.Schema(
 
     password: {
       type: String,
-      validate: {
-        validator: (value) =>
-          validator.isStrongPassword(value, {
-            minLength: 6,
-            minLowercase: 1,
-            minNumbers: 1,
-            minUppercase: 1,
-            minSymbols: 1,
-          }),
-        message: "Password {VALUE} is not strong enough.",
-      },
+      required: [true, "Password is required"],
     },
     // confirmPassword: {
     //   type: String,
@@ -87,7 +78,6 @@ const userSchema = mongoose.Schema(
     addedBy: {
       name: {
         type: String,
-        validate: [validator.isEmail, "Provide a valid name"],
         // required: [true, "Please provide a employee name"],
       },
       id: {
@@ -119,7 +109,6 @@ userSchema.methods.generateConfirmationToken = function () {
 
 userSchema.methods.comparePassword = function (password, hash) {
   const isPasswordValid = bcrypt.compareSync(password, hash);
-  console.log(isPasswordValid, password, hash);
   return isPasswordValid;
 };
 

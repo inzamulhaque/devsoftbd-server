@@ -2,46 +2,57 @@
 //login
 //update
 const userService = require("../services/user.services");
-const bcrypt = require("bcryptjs");
+
 const generateToken = require("../utils/token");
 const { statusError } = require("../utils/statusError");
 const User = require("../models/User");
 
 exports.signup = async (req, res) => {
   try {
-    console.log("object");
-    const user = await userService.signup(req.body);
+    const { email } = req.user;
+    const addedBy = await userService.findUserByEmail(email);
+
+    if (!addedBy) {
+      return res.status(400).json({ status: false, error: "user not found" });
+    }
+
+    const user = await userService.signup(req.body, addedBy);
     // await user.save({ validateBeforeSave: true });
-    console.log(user);
-    if (!user) throw statusError("No users found!", 404);
-    console.log("object");
+    if (!user) {
+      return res.status(400).send({ message: "user not create" });
+    }
     res.status(200).send({ message: "Successfully signed up" });
   } catch (error) {
-    res.status(500).json({
-      status: "failed",
-      error,
-    });
+    console.log(error);
+    res.status(400).send({ message: "user not create" });
   }
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) throw statusError("Provide your credentials", 401);
-  const user = await User.findOne({ email });
-  if (!user) throw statusError("No users found!", 401);
-  const isPasswordValid = user.comparePassword(password, user.password);
-  if (!isPasswordValid) throw statusError("Password is not correct", 403);
-  const token = generateToken(user);
-  const { password: pwd, ...others } = user.toObject();
-  if (!others) throw statusError("failed", 500);
-  res.status(200).json({
-    status: "success",
-    message: "Successfully logged in",
-    data: {
-      user: others,
-      token,
-    },
-  });
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) throw statusError("Provide your credentials", 404);
+    const user = await userService.findUserByEmail(email);
+    if (!user) throw statusError("No users found!", 404);
+    const isPasswordValid = user.comparePassword(password, user.password);
+    if (!isPasswordValid) throw statusError("Passwoed not match!", 404);
+    const token = generateToken(user);
+    const { password: pwd, ...others } = user.toObject();
+    if (!others) throw statusError("failed", 404);
+    res.status(200).json({
+      status: true,
+      message: "Successfully logged in",
+      data: {
+        user: others,
+        token,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: false,
+      message: "User not found",
+    });
+  }
 };
 
 exports.update = async (req, res) => {
