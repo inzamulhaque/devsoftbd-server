@@ -14,7 +14,7 @@ router.post(
 
 router.post("/login", userController.login);
 
-// router.put("/:id", userController.update);
+router.patch("/", verifyApiKey, verifyToken, userController.update);
 
 router.get("/me", verifyToken, userController.getMe);
 

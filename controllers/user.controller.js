@@ -24,7 +24,7 @@ exports.signup = async (req, res) => {
     res.status(200).send({ message: "Successfully signed up" });
   } catch (error) {
     console.log(error);
-    res.status(400).send({ message: "user not create" });
+    res.status(400).send({ message: "user not create", status: false });
   }
 };
 
@@ -56,15 +56,14 @@ exports.login = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const { id } = req.params;
-  if (!id) throw statusError("No users found!", 404);
-  const user = await User.findUserByEmail({ id });
+  const { email } = req.user;
+  if (!email) throw statusError("No users found!", 404);
+  const user = await userService.findUserByEmail(email);
   if (!user) throw statusError("No users found!", 404);
-  const updatedUser = await User.findOneAndUpdate({ _id: id }, user, {
-    new: false,
-  });
+  const updatedUser = await User.findOneAndUpdate({ _id: user._id }, user);
   if (!updatedUser) throw statusError("No users found!", 404);
   res.status(200).send({
+    status: true,
     message: "User updated successfully",
   });
 };
@@ -72,15 +71,15 @@ exports.update = async (req, res) => {
 exports.getMe = async (req, res) => {
   try {
     const { email } = req.user;
-    const user = await userService.findUserByEmail({ email });
+    const user = await userService.findUserByEmail(email);
     console.log(user);
     res.status(200).json({
-      status: "success",
+      status: true,
       data: user,
     });
   } catch (error) {
     res.status(500).json({
-      status: "fail",
+      status: false,
       error,
     });
   }

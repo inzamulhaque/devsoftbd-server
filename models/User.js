@@ -78,12 +78,12 @@ const userSchema = mongoose.Schema(
     addedBy: {
       name: {
         type: String,
-        // required: [true, "Please provide a employee name"],
+        required: [true, "Please provide a employee name"],
       },
       id: {
         type: ObjectId,
         ref: "User",
-        // required: [true, "Please provide a employee's id"],
+        required: [true, "Please provide a employee's id"],
       },
     },
     confirmationToken: String,
