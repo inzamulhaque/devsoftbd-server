@@ -10,7 +10,7 @@ router
 
 router
   .route("/:id")
-  .put(verifyApiKey, verifyToken, reviewController.editReview)
+  .patch(verifyApiKey, verifyToken, reviewController.editReview)
   .delete(verifyApiKey, verifyToken, reviewController.deleteReviewById);
 
 module.exports = router;

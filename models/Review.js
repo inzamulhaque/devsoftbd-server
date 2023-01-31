@@ -13,7 +13,7 @@ const reviewSchema = mongoose.Schema(
     imgURL: {
       type: String,
       trim: true,
-      unique: true,
+      // unique: true,
       required: [true, "Image URL is required"],
     },
 

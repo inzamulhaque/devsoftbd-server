@@ -22,11 +22,12 @@ exports.createReview = async (req, res) => {
       });
     }
 
-    res.status(201).json({ status: true, message: "Review created", blog });
+    res.status(201).json({ status: true, message: "Review created", result });
   } catch (error) {
     res.status(400).json({
       status: false,
-      error: "review not created",
+      message: "review not created",
+      error,
     });
   }
 };
@@ -59,14 +60,14 @@ exports.editReview = async (req, res) => {
     const { id } = req.params;
     const data = req.body;
     const { email } = req.user;
-    const user = await findUserByEmail(email);
-
+    const user = await userServices.findUserByEmail(email);
     if (!user) {
       return res.status(400).json({
         status: false,
         error: "user not found",
       });
     }
+    console.log("result");
     const result = await reviewServices.editReview(id, data, user);
 
     if (!result) {
@@ -84,7 +85,8 @@ exports.editReview = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       status: false,
-      error: "review not found",
+      message: "review not found",
+      error,
     });
   }
 };

@@ -6,7 +6,7 @@ exports.createNewReview = async (data, user) => {
     "createdBy.id": user._id,
     "createdBy.name": user.name,
   });
-  console.log(user._id);
+  console.log(result);
   return result;
 };
 
@@ -15,13 +15,15 @@ exports.getReviews = async () => {
 };
 
 exports.editReview = async (id, data, user) => {
-  return Review.updateOne(
+  console.log(data, user);
+  const result = await Review.updateOne(
     { _id: id },
     {
       ...data,
-      $push: { createdBy: { name: user.name, id: user._id } },
+      $set: { createdBy: { name: user.name, id: user._id } },
     }
   );
+  return result;
 };
 
 exports.deleteReview = async (id) => {
