@@ -50,3 +50,14 @@ const reviewSchema = mongoose.Schema(
 const Review = mongoose.model("Review", reviewSchema);
 
 module.exports = Review;
+// {
+//     "name": "Alif",
+//     "imgURL":"https://pixlr.com/images/index/remove-bg.webp",
+//     "review":"very good",
+//     "rating":"5",
+//     "createdBy":{
+//       "name":"md. ih"
+//       "id":"63d4fc8d09e65742d2bc23b7"
+//     }
+
+// }

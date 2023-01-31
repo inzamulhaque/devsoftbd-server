@@ -11,6 +11,6 @@ router
 router
   .route("/:id")
   .put(verifyApiKey, verifyToken, reviewController.editReview)
-  .delete(verifyApiKey, verifyToken, reviewController.deleteReviewByURL);
+  .delete(verifyApiKey, verifyToken, reviewController.deleteReviewById);
 
 module.exports = router;

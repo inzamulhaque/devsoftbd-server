@@ -50,22 +50,29 @@ exports.login = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       status: false,
-      message: "User not found",
+      message: "something went wrong",
     });
   }
 };
 
 exports.update = async (req, res) => {
-  const { email } = req.user;
-  if (!email) throw statusError("No users found!", 404);
-  const user = await userService.findUserByEmail(email);
-  if (!user) throw statusError("No users found!", 404);
-  const updatedUser = await User.findOneAndUpdate({ _id: user._id }, user);
-  if (!updatedUser) throw statusError("No users found!", 404);
-  res.status(200).send({
-    status: true,
-    message: "User updated successfully",
-  });
+  try {
+    if (!email) throw statusError("No users found!", 404);
+    const user = await userService.findUserByEmail(email);
+    if (!user) throw statusError("No users found!", 404);
+    const updatedUser = await User.findOneAndUpdate({ _id: user._id }, user);
+    if (!updatedUser) throw statusError("No users found!", 404);
+    res.status(200).send({
+      status: true,
+      message: "User updated successfully",
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: false,
+      message: "something went wrong",
+      error,
+    });
+  }
 };
 
 exports.getMe = async (req, res) => {

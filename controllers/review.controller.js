@@ -1,10 +1,19 @@
 const reviewServices = require("../services/review.services");
+const userServices = require("../services/user.services");
 
 exports.createReview = async (req, res) => {
   try {
     const data = req.body;
-
-    const result = await reviewServices.createNewReview(data);
+    const { email } = req.user;
+    const user = await userServices.findUserByEmail(email);
+    if (!user) {
+      return res.status(400).json({
+        status: false,
+        error: "User not found",
+      });
+    }
+    const result = await reviewServices.createNewReview(data, user);
+    console.log(result);
 
     if (!result) {
       return res.status(400).json({
@@ -49,8 +58,16 @@ exports.editReview = async (req, res) => {
   try {
     const { id } = req.params;
     const data = req.body;
+    const { email } = req.user;
+    const user = await findUserByEmail(email);
 
-    const result = await reviewServices.editReview(id, data);
+    if (!user) {
+      return res.status(400).json({
+        status: false,
+        error: "user not found",
+      });
+    }
+    const result = await reviewServices.editReview(id, data, user);
 
     if (!result) {
       return res.status(400).json({
@@ -72,7 +89,7 @@ exports.editReview = async (req, res) => {
   }
 };
 
-exports.deleteReviewByURL = async (req, res) => {
+exports.deleteReviewById = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await reviewServices.deleteReview(id);
