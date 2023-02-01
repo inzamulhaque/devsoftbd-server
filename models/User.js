@@ -46,6 +46,15 @@ const userSchema = mongoose.Schema(
     role: {
       type: String,
       required: [true, "Please provide a valid position name"],
+      enum: {
+        values: ["admin"],
+        message: "status value can't be {VALUE}, must be admin",
+      },
+      default: "admin",
+    },
+    position: {
+      type: String,
+      required: [true, "Please provide a valid position name"],
       trim: true,
       minLength: [3, "Must be at least 3 characters."],
     },
@@ -73,7 +82,11 @@ const userSchema = mongoose.Schema(
     },
     gitURL: {
       type: String,
-      validate: [validator.isURL, "Please provide a valid url"],
+      validate: [validator.isURL, "Please provide a valid github url"],
+    },
+    imgURL: {
+      type: String,
+      validate: [validator.isURL, "Please provide a valid image url"],
     },
     addedBy: {
       name: {
