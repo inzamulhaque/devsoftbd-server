@@ -12,8 +12,15 @@ router.post(
   userController.signup
 );
 
-router.post("/login", userController.login);
+router.post("/login", verifyApiKey, userController.login);
 
-router.put("/:id", userController.update);
+router.patch(
+  "/changepassword",
+  verifyApiKey,
+  verifyToken,
+  userController.changePassword
+);
+
+router.patch("/:id", verifyApiKey, verifyToken, userController.update);
 
 module.exports = router;

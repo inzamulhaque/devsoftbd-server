@@ -21,3 +21,8 @@ exports.signup = async (userInfo, addedBy) => {
 exports.findUserByEmail = async (email) => {
   return await User.findOne({ email });
 };
+
+exports.updatePassword = async (user, password) => {
+  const hashedPassword = bcrypt.hashSync(password);
+  return User.findByIdAndUpdate(user._id, { password: hashedPassword });
+};

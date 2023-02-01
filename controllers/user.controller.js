@@ -57,7 +57,7 @@ exports.login = async (req, res) => {
 exports.update = async (req, res) => {
   const { id } = req.params;
   if (!id) throw statusError("No users found!", 404);
-  const user = await findUserByEmail(email);
+  const user = await userService.findUserByEmail(email);
   if (!user) throw statusError("No users found!", 404);
   const updatedUser = await UserModel.findOneAndUpdate({ _id: id }, user, {
     new: false,
@@ -66,4 +66,54 @@ exports.update = async (req, res) => {
   res.status(200).send({
     message: "User updated successfully",
   });
+};
+
+exports.changePassword = async (req, res) => {
+  try {
+    const { email } = req.user;
+    const { oldPassword, newPassword, confirmNewPassword } = req.body;
+    const user = await userService.findUserByEmail(email);
+
+    if (!user) {
+      return res.status(400).send({
+        status: false,
+        error: "User not find",
+      });
+    }
+
+    const isPasswordValid = user.comparePassword(oldPassword, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(400).send({
+        status: false,
+        error: "Invalid password",
+      });
+    }
+
+    if (newPassword !== confirmNewPassword) {
+      return res.status(400).send({
+        status: false,
+        error: "Password and Confirm Password do not match",
+      });
+    }
+
+    const result = await userService.updatePassword(user, newPassword);
+
+    if (!result) {
+      return res.status(400).send({
+        status: false,
+        error: "Password and Confirm Password do not match",
+      });
+    }
+
+    res.status(200).send({
+      status: true,
+      error: "Password updated",
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: false,
+      error: "User not find",
+    });
+  }
 };
