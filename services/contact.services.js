@@ -19,3 +19,9 @@ exports.getContact = async (id) => {
   const result = await Contact.findById(id);
   return result;
 };
+
+exports.createContact = async (data) => {
+  console.log("result");
+  const result = await Contact.create(data);
+  return result;
+};

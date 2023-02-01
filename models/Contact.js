@@ -54,3 +54,10 @@ const contactSchema = mongoose.Schema(
 const Contact = mongoose.model("Contact", contactSchema);
 
 module.exports = Contact;
+// {
+//     "name": "Alif inzamul",
+//     "email":"a@a.com",
+//     "sub":"very very good",
+//     "message":"fgf fhd fdhd hdth th tht th",
+//     "status":"unseen"
+// }

@@ -50,7 +50,7 @@ exports.editContact = async (req, res) => {
   }
 };
 
-exports.getReview = async (req, res) => {
+exports.getContact = async (req, res) => {
   try {
     const result = await contactServices.getContact(req.params.id);
     if (!result) {
@@ -64,6 +64,29 @@ exports.getReview = async (req, res) => {
     res.status(400).json({
       status: false,
       message: "something went wrong",
+      error,
+    });
+  }
+};
+
+exports.createContact = async (req, res) => {
+  try {
+    const data = req.body;
+    console.log(data);
+    const result = await contactServices.createContact(data);
+
+    if (!result) {
+      return res.status(400).json({
+        status: false,
+        error: "Contact not created",
+      });
+    }
+
+    res.status(201).json({ status: true, message: "Contact created", result });
+  } catch (error) {
+    res.status(400).json({
+      status: false,
+      message: "contact not created",
       error,
     });
   }

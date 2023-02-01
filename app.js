@@ -10,11 +10,13 @@ app.use(cors());
 const userRoute = require("./routes/user.route");
 const blogRoute = require("./routes/blog.route");
 const reviewRoute = require("./routes/review.route");
+const contactRoute = require("./routes/contact.route");
 
 // routes
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/blog", blogRoute);
 app.use("/api/v1/review", reviewRoute);
+app.use("/api/v1/contact", contactRoute);
 
 app.get("/", (req, res) => {
   res.send("Route is working!");
