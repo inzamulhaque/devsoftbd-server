@@ -24,5 +24,5 @@ exports.findUserByEmail = async (email) => {
 
 exports.updatePassword = async (user, password) => {
   const hashedPassword = bcrypt.hashSync(password);
-  return User.findByIdAndUpdate(user._id, { password: hashedPassword });
+  return User.findByIdAndUpdate(user._id, { password: hashedPassword }, {runValidators: true});
 };
