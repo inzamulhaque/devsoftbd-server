@@ -1,5 +1,5 @@
 // name
-// name
+// role
 // password
 // contact Number
 // emergency Number
@@ -9,6 +9,7 @@
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema.Types;
 const validator = require("validator");
+// const bcrypt = require("bcryptjs");
 const bcrypt = require("bcryptjs");
 
 const userSchema = mongoose.Schema(
@@ -24,10 +25,18 @@ const userSchema = mongoose.Schema(
 
     password: {
       type: String,
-      // required: [true, "Password is required"],
     },
 
     role: {
+      type: String,
+      required: [true, "Please provide a valid position name"],
+      enum: {
+        values: ["admin"],
+        message: "status value can't be {VALUE}, must be admin",
+      },
+      default: "admin",
+    },
+    position: {
       type: String,
       required: [true, "Please provide a valid position name"],
       trim: true,
@@ -55,10 +64,16 @@ const userSchema = mongoose.Schema(
         "Please provide a valid contact number",
       ],
     },
-    githubURL: {
+    gitURL: {
       type: String,
-      validate: [validator.isURL, "Please provide a valid url"],
+      validate: [validator.isURL, "Please provide a valid github url"],
     },
+    imgURL: {
+      type: String,
+      required: [true, "Please provide Image URL"],
+      validate: [validator.isURL, "Please provide a valid image url"],
+    },
+
     addedBy: {
       name: {
         type: String,
@@ -70,7 +85,21 @@ const userSchema = mongoose.Schema(
         required: [true, "Please provide a employee's id"],
       },
     },
-    confirmationToken: String,
+
+    status: {
+      type: String,
+      required: [true, "Please provide user status"],
+      default: "inactive",
+      enum: {
+        values: ["active", "inactive", "blocked", "deleted"],
+        message: "status value can't be {VALUE}.",
+      },
+    },
+
+    confirmationToken: {
+      type: String,
+      unique: true,
+    },
     confirmationTokenExpires: Date,
   },
   {

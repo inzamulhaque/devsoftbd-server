@@ -14,13 +14,15 @@ router.post(
 
 router.post("/login", verifyApiKey, userController.login);
 
+router.patch("/", verifyApiKey, verifyToken, userController.update);
+
+router.get("/me", verifyToken, userController.getMe);
+
 router.patch(
   "/changepassword",
   verifyApiKey,
   verifyToken,
   userController.changePassword
 );
-
-router.patch("/:id", verifyApiKey, verifyToken, userController.update);
 
 module.exports = router;

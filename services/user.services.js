@@ -4,7 +4,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
-exports.signup = async (userInfo, addedBy) => {
+exports.signup = async (userInfo, addedBy, verifyToken, time) => {
   if (userInfo.password !== userInfo.confirmPassword) {
     return "confirmPassword: Passwords don't match!";
   }
@@ -13,6 +13,8 @@ exports.signup = async (userInfo, addedBy) => {
   userInfo.password = hashedPassword;
   const user = await User.create({
     ...userInfo,
+    verifyToken,
+    time,
     addedBy: { name: addedBy.name, id: addedBy._id },
   });
   return user;
@@ -24,5 +26,9 @@ exports.findUserByEmail = async (email) => {
 
 exports.updatePassword = async (user, password) => {
   const hashedPassword = bcrypt.hashSync(password);
-  return User.findByIdAndUpdate(user._id, { password: hashedPassword }, {runValidators: true});
+  return User.findByIdAndUpdate(
+    user._id,
+    { password: hashedPassword },
+    { runValidators: true }
+  );
 };
