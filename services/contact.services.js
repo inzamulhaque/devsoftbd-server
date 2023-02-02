@@ -4,18 +4,19 @@ exports.getContacts = async () => {
   return Contact.find().sort({ createdAt: "descending" });
 };
 
-exports.editContact = async (id, data) => {
-  //   console.log(data, user);
-  const result = await Contact.updateOne(
-    { _id: id },
-    {
-      $set: data,
-    }
-  );
-  return result;
-};
+// exports.editContact = async (id, data) => {
+//   //   console.log(data, user);
+//   const result = await Contact.updateOne(
+//     { _id: id },
+//     {
+//       $set: {"status":},
+//     }
+//   );
+//   return result;
+// };
 
 exports.getContact = async (id) => {
+  await Contact.findByIdAndUpdate(id, { status: "seen" });
   const result = await Contact.findById(id);
   return result;
 };

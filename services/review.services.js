@@ -16,13 +16,7 @@ exports.getReviews = async () => {
 
 exports.editReview = async (id, data, user) => {
   console.log(data, user);
-  const result = await Review.updateOne(
-    { _id: id },
-    {
-      ...data,
-      $set: { createdBy: { name: user.name, id: user._id } },
-    }
-  );
+  const result = await Review.findByIdAndUpdate({ _id: id }, data);
   return result;
 };
 

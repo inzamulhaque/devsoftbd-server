@@ -90,3 +90,11 @@ const blogSchema = mongoose.Schema(
 const Blog = mongoose.model("Blog", blogSchema);
 
 module.exports = Blog;
+// {
+//   "title": "test test test test test",
+//   "metaTitle": "test",
+//   "metaDescription": "test",
+//   "description": "test",
+//   "img1": "https://devsoftbd.com",
+//   "img2": "https://devsoftbd.com"
+// }

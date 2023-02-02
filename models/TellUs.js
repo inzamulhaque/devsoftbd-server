@@ -1,12 +1,13 @@
-// name
-// email
-// sub
-// message
-// status(seen, unseen)
+// 1. Email Adress*
+// 2. company name*
+// 3. Industry Name*
+// 4. Website URL
+// 5. Message*
+// 6. Status*
 const mongoose = require("mongoose");
 const validator = require("validator");
 
-const contactSchema = mongoose.Schema(
+const tellUsSchema = mongoose.Schema(
   {
     email: {
       type: String,
@@ -25,20 +26,33 @@ const contactSchema = mongoose.Schema(
         message: "status value can't be {VALUE}, must be seen/unseen",
       },
     },
-    name: {
+    companyName: {
       type: String,
       // required: [true, "Please provide your name"],
       trim: true,
       minLength: [3, "Name must be at least 3 characters."],
       maxLength: [100, "Name is too large"],
     },
-    sub: {
+    industryName: {
       type: String,
-      required: [true, "Please provide your message subject"],
+      // required: [true, "Please provide your name"],
       trim: true,
-      minLength: [5, "Subject must be at least 3 characters."],
-      maxLength: [100, "Subject is too large"],
+      minLength: [3, "Name must be at least 3 characters."],
+      maxLength: [100, "Name is too large"],
     },
+    webURL: {
+      type: String,
+      trim: true,
+      // unique: true,
+      // required: [true, "Image URL is required"],
+    },
+    // sub: {
+    //   type: String,
+    //   required: [true, "Please provide your message subject"],
+    //   trim: true,
+    //   minLength: [5, "Subject must be at least 3 characters."],
+    //   maxLength: [100, "Subject is too large"],
+    // },
     message: {
       type: String,
       required: [true, "Please provide your message"],
@@ -51,13 +65,13 @@ const contactSchema = mongoose.Schema(
   }
 );
 
-const Contact = mongoose.model("Contact", contactSchema);
+const TellUs = mongoose.model("TellUs", tellUsSchema);
 
-module.exports = Contact;
+module.exports = TellUs;
 // {
-//     "name": "Alif inzamul",
+//     "companyName": "Alif inzamul",
+//     "industryName": "Alif inzamul",
 //     "email":"a@a.com",
-//     "sub":"very very good",
 //     "message":"fgf fhd fdhd hdth th tht th",
 //     "status":"unseen"
 // }
