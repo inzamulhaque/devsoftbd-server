@@ -16,7 +16,7 @@ router.post("/login", verifyApiKey, userController.login);
 
 router.patch("/", verifyApiKey, verifyToken, userController.update);
 
-router.get("/me", verifyToken, userController.getMe);
+router.get("/me", verifyApiKey, verifyToken, userController.getMe);
 
 router.patch(
   "/changepassword",
@@ -24,5 +24,7 @@ router.patch(
   verifyToken,
   userController.changePassword
 );
+
+router.patch("/verifyuser/:token", verifyApiKey, userController.verifyUser);
 
 module.exports = router;

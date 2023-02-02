@@ -10,20 +10,14 @@ exports.signup = async (req, res) => {
     const { email } = req.user || {};
     const addedBy = await userService.findUserByEmail(email);
     const verifyToken = Math.floor(100000 + Math.random() * 900000);
-    const time = new Date().getTime() + 10300;
-
-    if (req.body.password !== req.body.confirmPassword) {
-      return res.status(400).json({
-        status: false,
-        error: "password and confirmpassword do not match",
-      });
-    }
+    const time = new Date();
+    time.setMinutes(time.getMinutes() + 10);
 
     if (!addedBy) {
       return res.status(400).json({ status: false, error: "user not found" });
     }
 
-    const user = await userService.signup(req.body, verifyToken, time);
+    const user = await userService.signup(req.body, addedBy, verifyToken, time);
     // await user.save({ validateBeforeSave: true });
     if (!user) {
       return res.status(400).send({ message: "user not create" });
@@ -47,7 +41,9 @@ exports.signup = async (req, res) => {
       html: `please verify our account. <a href="https://admin.devsoftbd.com/activeadminaccount/${verifyToken}">Click</a> <br/><br/> <h3>Best Regards,<br/>${addedBy.name}<br/>DevSoftBD</h3>`, // html body
     });
 
-    res.status(200).send({ message: "Successfully signed up" });
+    res
+      .status(200)
+      .send({ status: true, message: "Successfully signed up", user });
   } catch (error) {
     console.log(error);
     res.status(400).send({ message: "user not create", status: false });
@@ -161,6 +157,64 @@ exports.changePassword = async (req, res) => {
       status: true,
       message: "Password updated",
     });
+  } catch (error) {
+    res.status(400).send({
+      status: false,
+      error: "User not find",
+    });
+  }
+};
+
+exports.verifyUser = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const user = await userService.getUserByToken(token);
+
+    if (!user) {
+      return res.status(400).send({
+        status: false,
+        error: "User not find",
+      });
+    }
+
+    if (new Date() > new Date(user.confirmationTokenExpires)) {
+      return res.status(400).send({
+        status: false,
+        error: "Time Out",
+      });
+    }
+
+    if (
+      !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z!@#$%^&*]).{6,}$/.test(
+        req.body.password
+      )
+    ) {
+      return res.status(400).json({
+        status: false,
+        error: "please provide a strong password",
+      });
+    }
+
+    if (req.body.password !== req.body.confirmPassword) {
+      return res.status(400).json({
+        status: false,
+        error: "password and confirmpassword do not match",
+      });
+    }
+
+    const result = await userService.updatedPassword(
+      user._id,
+      req.body.password
+    );
+
+    if (!result) {
+      return res.status(400).send({
+        status: false,
+        error: "User not verifed",
+      });
+    }
+
+    res.status(200).json({ status: true, message: "user verifed" });
   } catch (error) {
     res.status(400).send({
       status: false,
