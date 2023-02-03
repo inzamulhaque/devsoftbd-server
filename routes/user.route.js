@@ -25,6 +25,13 @@ router.patch(
   userController.changePassword
 );
 
+router.patch(
+  "/resetpassword",
+  verifyApiKey,
+  verifyToken,
+  userController.resetPassword
+);
+
 router.patch("/verifyuser/:token", verifyApiKey, userController.verifyUser);
 
 module.exports = router;

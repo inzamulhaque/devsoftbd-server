@@ -46,3 +46,11 @@ exports.updatedPassword = async (id, password) => {
     { runValidators: true }
   );
 };
+
+exports.resetPassword = async (id, verifyToken, time) => {
+  return await User.findByIdAndUpdate(
+    { _id: id },
+    { confirmationToken: verifyToken, confirmationTokenExpires: time },
+    { runValidators: true }
+  );
+};
