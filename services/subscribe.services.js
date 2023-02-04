@@ -11,3 +11,7 @@ exports.allActiveMail = async () => {
 exports.removeEmail = async (email) => {
   return await Subscribe.findOneAndDelete({ email });
 };
+
+exports.totalSubscriber = async () => {
+  return Subscribe.countDocuments();
+};

@@ -26,3 +26,7 @@ exports.createContact = async (data) => {
   const result = await Contact.create(data);
   return result;
 };
+
+exports.totalUnseenContact = async () => {
+  return await Contact.countDocuments({ status: "unseen" });
+};

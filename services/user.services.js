@@ -54,3 +54,7 @@ exports.resetPassword = async (id, verifyToken, time) => {
     { runValidators: true }
   );
 };
+
+exports.totalUser = async () => {
+  return await User.countDocuments();
+};

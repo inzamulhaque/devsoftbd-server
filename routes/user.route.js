@@ -18,6 +18,8 @@ router.patch("/", verifyApiKey, verifyToken, userController.update);
 
 router.get("/me", verifyApiKey, verifyToken, userController.getMe);
 
+router.get("/totaluser", verifyApiKey, verifyToken, userController.totalUser);
+
 router.patch(
   "/changepassword",
   verifyApiKey,

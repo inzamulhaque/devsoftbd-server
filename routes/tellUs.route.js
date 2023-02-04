@@ -12,6 +12,10 @@ router
   .get(verifyApiKey, verifyToken, tellUsController.getTellUss)
   .post(verifyApiKey, tellUsController.createTellUs);
 
+router
+  .route("/totaltell")
+  .get(verifyApiKey, verifyToken, tellUsController.totalTell);
+
 router.route("/:id").get(verifyApiKey, verifyToken, tellUsController.getTellUs);
 
 module.exports = router;

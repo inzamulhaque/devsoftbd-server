@@ -91,3 +91,26 @@ exports.createTellUs = async (req, res) => {
     });
   }
 };
+
+exports.totalTell = async (req, res) => {
+  try {
+    const result = await tellUsServices.totalUser();
+
+    if (!result) {
+      return res.status(200).send({
+        status: true,
+        count: 0,
+      });
+    }
+
+    res.status(200).send({
+      status: true,
+      count: result,
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: false,
+      error: "Tell US not find",
+    });
+  }
+};

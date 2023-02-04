@@ -9,6 +9,8 @@ router
   .get(verifyApiKey, verifyToken, contactController.getContacts)
   .post(verifyApiKey, contactController.createContact);
 
+router.get("/totalunseencontact", verifyApiKey, verifyToken);
+
 router
   .route("/:id")
   .patch(verifyApiKey, verifyToken, contactController.editContact)

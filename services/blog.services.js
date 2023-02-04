@@ -39,3 +39,7 @@ exports.saveDeleteBlog = async (others, user) => {
 exports.deleteBlog = async (id) => {
   return await Blog.findByIdAndDelete(id);
 };
+
+exports.totalBlogs = async () => {
+  return await Blog.countDocuments({ status: "unseen" });
+};

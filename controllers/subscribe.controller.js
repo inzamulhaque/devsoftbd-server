@@ -3,6 +3,7 @@ const {
   addEmail,
   allActiveMail,
   removeEmail,
+  totalSubscriber,
 } = require("../services/subscribe.services");
 const { findUserByEmail } = require("../services/user.services");
 
@@ -118,6 +119,29 @@ exports.deleteEmail = async (req, res) => {
     res.status(400).send({
       status: false,
       error: "email not found",
+    });
+  }
+};
+
+exports.totalSubscriber = async (req, res) => {
+  try {
+    const result = await totalSubscriber();
+
+    if (!result) {
+      return res.status(200).send({
+        status: true,
+        count: 0,
+      });
+    }
+
+    res.status(200).send({
+      status: true,
+      count: result,
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: false,
+      error: "subscriber not find",
     });
   }
 };

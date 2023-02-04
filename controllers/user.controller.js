@@ -284,3 +284,26 @@ exports.resetPassword = async (req, res) => {
     });
   }
 };
+
+exports.totalUser = async (req, res) => {
+  try {
+    const result = await userService.totalUser();
+
+    if (!result) {
+      return res.status(200).send({
+        status: true,
+        count: 0,
+      });
+    }
+
+    res.status(200).send({
+      status: true,
+      count: result,
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: false,
+      error: "User not find",
+    });
+  }
+};

@@ -23,3 +23,7 @@ exports.editReview = async (id, data, user) => {
 exports.deleteReview = async (id) => {
   return await Review.findOneAndDelete({ _id: id }, { new: true });
 };
+
+exports.totalReview = async () => {
+  return await Review.countDocuments();
+};

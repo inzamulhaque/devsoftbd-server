@@ -26,3 +26,7 @@ exports.createTellUs = async (data) => {
   const result = await TellUs.create(data);
   return result;
 };
+
+exports.totalUser = async () => {
+  return await TellUs.countDocuments({ status: "unseen" });
+};

@@ -8,6 +8,13 @@ router
   .post(verifyApiKey, verifyToken, reviewController.createReview)
   .get(verifyApiKey, verifyToken, reviewController.getReviews);
 
+router.get(
+  "/totalreview",
+  verifyApiKey,
+  verifyToken,
+  reviewController.totalReview
+);
+
 router
   .route("/:id")
   .patch(verifyApiKey, verifyToken, reviewController.editReview)

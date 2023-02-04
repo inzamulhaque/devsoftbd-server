@@ -114,3 +114,26 @@ exports.deleteReviewById = async (req, res) => {
     });
   }
 };
+
+exports.totalReview = async (req, res) => {
+  try {
+    const result = await reviewServices.totalReview();
+
+    if (!result) {
+      return res.status(200).send({
+        status: true,
+        count: 0,
+      });
+    }
+
+    res.status(200).send({
+      status: true,
+      count: result,
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: false,
+      error: "Reviews not find",
+    });
+  }
+};

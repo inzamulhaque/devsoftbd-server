@@ -21,6 +21,7 @@ const tellUsSchema = mongoose.Schema(
     status: {
       type: String,
       required: true,
+      default: "unseen",
       enum: {
         values: ["seen", "unseen"],
         message: "status value can't be {VALUE}, must be seen/unseen",
