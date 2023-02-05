@@ -50,6 +50,7 @@ const userSchema = mongoose.Schema(
       minLength: [3, "Name must be at least 3 characters."],
       maxLength: [100, "Name is too large"],
     },
+
     contactNumber: {
       type: String,
       validate: [
@@ -57,6 +58,7 @@ const userSchema = mongoose.Schema(
         "Please provide a valid contact number",
       ],
     },
+
     emergencyNumber: {
       type: String,
       validate: [
@@ -64,10 +66,12 @@ const userSchema = mongoose.Schema(
         "Please provide a valid contact number",
       ],
     },
+
     gitURL: {
       type: String,
       validate: [validator.isURL, "Please provide a valid github url"],
     },
+
     imgURL: {
       type: String,
       required: [true, "Please provide Image URL"],
