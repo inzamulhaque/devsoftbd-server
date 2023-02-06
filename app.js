@@ -12,6 +12,7 @@ const blogRoute = require("./routes/blog.route");
 const reviewRoute = require("./routes/review.route");
 const contactRoute = require("./routes/contact.route");
 const tellUsRoute = require("./routes/tellUs.route");
+const serviceRoute = require("./routes/service.route");
 
 // routes
 app.use("/api/v1/user", userRoute);
@@ -19,6 +20,7 @@ app.use("/api/v1/blog", blogRoute);
 app.use("/api/v1/review", reviewRoute);
 app.use("/api/v1/contact", contactRoute);
 app.use("/api/v1/tellus", tellUsRoute);
+app.use("/api/v1/service", serviceRoute);
 
 app.get("/", (req, res) => {
   res.send("Route is working!");
