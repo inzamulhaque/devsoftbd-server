@@ -133,3 +133,8 @@ userSchema.methods.comparePassword = function (password, hash) {
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
+
+// {
+// "email":"mdihalif@gmail.com",
+// "password":"123456"
+// }
