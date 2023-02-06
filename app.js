@@ -14,6 +14,7 @@ const contactRoute = require("./routes/contact.route");
 const tellUsRoute = require("./routes/tellUs.route");
 const subscribeRoute = require("./routes/subscribe.route");
 const teamRoute = require("./routes/team.route");
+const pricingRoute = require("./routes/pricing.route");
 
 // routes
 app.use("/api/v1/user", userRoute);
@@ -23,6 +24,7 @@ app.use("/api/v1/contact", contactRoute);
 app.use("/api/v1/tellus", tellUsRoute);
 app.use("/api/v1/subscribe", subscribeRoute);
 app.use("/api/v1/team", teamRoute);
+app.use("/api/v1/pricing", pricingRoute);
 
 app.get("/", (req, res) => {
   res.send("Route is working!");
