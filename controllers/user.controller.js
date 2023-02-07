@@ -5,6 +5,7 @@ const userService = require("../services/user.services");
 
 const generateToken = require("../utils/token");
 const { statusError } = require("../utils/statusError");
+const User = require("../models/User");
 
 exports.signup = async (req, res) => {
   try {
@@ -24,7 +25,8 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) throw statusError("Provide your credentials", 404);
-    const user = await userService.findUserByEmail(email);
+    const user = await User.findOne({ email });
+    console.log(user);
     if (!user) throw statusError("No users found!", 404);
     const isPasswordValid = user.comparePassword(password, user.password);
     if (!isPasswordValid) throw statusError("Passwoed not match!", 404);
@@ -48,15 +50,16 @@ exports.login = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const { id } = req.params;
-  if (!id) throw statusError("No users found!", 404);
-  const user = await findUserByEmail(email);
+  const { email } = req.user;
+  if (!email) throw statusError("No users found!", 404);
+  const user = await findUserByEmail({ email });
   if (!user) throw statusError("No users found!", 404);
   const updatedUser = await UserModel.findOneAndUpdate({ _id: id }, user, {
     new: false,
   });
   if (!updatedUser) throw statusError("No users found!", 404);
   res.status(200).send({
+    status: "true",
     message: "User updated successfully",
   });
 };

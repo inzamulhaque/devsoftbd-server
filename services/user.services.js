@@ -16,5 +16,7 @@ exports.signup = async (userInfo) => {
 };
 
 exports.findUserByEmail = async (email) => {
-  return await User.findOne({ email });
+  const user = await User.findOne({ email });
+  console.log(user);
+  return user;
 };
