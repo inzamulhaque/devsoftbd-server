@@ -16,6 +16,8 @@ const subscribeRoute = require("./routes/subscribe.route");
 const teamRoute = require("./routes/team.route");
 const pricingRoute = require("./routes/pricing.route");
 const serviceRoute = require("./routes/service.route");
+const pricingOrdersRoute = require("./routes/pricingOrders.route");
+const countRoute = require("./routes/count.route");
 
 // routes
 app.use("/api/v1/user", userRoute);
@@ -27,6 +29,8 @@ app.use("/api/v1/subscribe", subscribeRoute);
 app.use("/api/v1/team", teamRoute);
 app.use("/api/v1/pricing", pricingRoute);
 app.use("/api/v1/service", serviceRoute);
+app.use("/api/v1/pricingorder", pricingOrdersRoute);
+app.use("/api/v1/count", countRoute);
 
 app.get("/", (req, res) => {
   res.send("Route is working!");

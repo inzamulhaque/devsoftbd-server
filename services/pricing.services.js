@@ -26,3 +26,7 @@ exports.updatePackageById = async (id, data) => {
 exports.deletePackageById = async (id) => {
   return await Pricing.findByIdAndDelete({ _id: id });
 };
+
+exports.totalPricing = async () => {
+  return await Pricing.countDocuments();
+};

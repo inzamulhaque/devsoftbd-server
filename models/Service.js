@@ -24,6 +24,7 @@ const serviceSchema = mongoose.Schema(
       },
       default: "unseen",
     },
+
     serviceName: {
       type: String,
       required: [true, "Please provide service name"],
