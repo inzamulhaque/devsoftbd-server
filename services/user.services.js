@@ -18,7 +18,9 @@ exports.signup = async (userInfo, addedBy, verifyToken, time) => {
 };
 
 exports.findUserByEmail = async (email) => {
-  return await User.findOne({ email });
+  const user = await User.findOne({ email });
+  console.log(user);
+  return user;
 };
 
 exports.updatePassword = async (user, password) => {

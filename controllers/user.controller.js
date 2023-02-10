@@ -54,7 +54,8 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) throw statusError("Provide your credentials", 404);
-    const user = await userService.findUserByEmail(email);
+    const user = await User.findOne({ email });
+    console.log(user);
     if (!user) throw statusError("No users found!", 404);
     const isPasswordValid = user.comparePassword(password, user.password);
     if (!isPasswordValid) throw statusError("Passwoed not match!", 404);
