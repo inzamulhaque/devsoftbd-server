@@ -3,8 +3,8 @@ const { promisify } = require("util");
 
 const verifyToken = async (req, res, next) => {
   try {
-    // const token = req.headers?.authorization?.split(" ")?.[1];
-    const token = req.cookies.devsoftbdadmin;
+    const token = req.headers?.authorization?.split(" ")?.[1];
+    // const token = req.cookies.devsoftbdadmin;
     if (!token) {
       return res.status(401).json({
         status: "fail",

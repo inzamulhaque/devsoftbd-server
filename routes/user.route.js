@@ -13,7 +13,6 @@ router.post(
 );
 
 router.post("/login", verifyApiKey, userController.login);
-router.get("/logout", verifyApiKey, verifyToken, userController.logout);
 
 router.patch("/", verifyApiKey, verifyToken, userController.update);
 
