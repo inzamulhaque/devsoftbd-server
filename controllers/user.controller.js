@@ -62,13 +62,16 @@ exports.login = async (req, res) => {
     const token = generateToken(user);
     const { password: pwd, ...others } = user.toObject();
     if (!others) throw statusError("failed", 404);
+
+    res.cookie("devsoftbdadmin", token, {
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      httpOnly: true,
+    });
+
     res.status(200).json({
       status: true,
       message: "Successfully logged in",
-      data: {
-        user: others,
-        token,
-      },
+      user: others,
     });
   } catch (error) {
     res.status(400).json({
@@ -306,5 +309,16 @@ exports.totalUser = async (req, res) => {
       status: false,
       error: "User not find",
     });
+  }
+};
+
+exports.logout = async (req, res) => {
+  try {
+    res.clearCookie("devsoftbdadmin");
+    res.status(200).json({ status: true, message: "logout" });
+  } catch (error) {
+    res
+      .status(400)
+      .json({ status: false, error: "the user is not logged out" });
   }
 };
