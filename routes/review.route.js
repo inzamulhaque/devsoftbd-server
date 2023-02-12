@@ -6,7 +6,7 @@ const router = express.Router();
 router
   .route("/")
   .post(verifyApiKey, verifyToken, reviewController.createReview)
-  .get(verifyApiKey, verifyToken, reviewController.getReviews);
+  .get(verifyApiKey, reviewController.getReviews);
 
 router.get(
   "/totalreview",
