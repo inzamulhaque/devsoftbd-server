@@ -53,6 +53,7 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
+
     if (!email || !password) throw statusError("Provide your credentials", 404);
     const user = await User.findOne({ email });
     console.log(user);
@@ -63,15 +64,11 @@ exports.login = async (req, res) => {
     const { password: pwd, ...others } = user.toObject();
     if (!others) throw statusError("failed", 404);
 
-    res.cookie("devsoftbdadmin", token, {
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      httpOnly: true,
-    });
-
     res.status(200).json({
       status: true,
       message: "Successfully logged in",
       user: others,
+      token,
     });
   } catch (error) {
     res.status(400).json({
@@ -309,16 +306,5 @@ exports.totalUser = async (req, res) => {
       status: false,
       error: "User not find",
     });
-  }
-};
-
-exports.logout = async (req, res) => {
-  try {
-    res.clearCookie("devsoftbdadmin");
-    res.status(200).json({ status: true, message: "logout" });
-  } catch (error) {
-    res
-      .status(400)
-      .json({ status: false, error: "the user is not logged out" });
   }
 };
