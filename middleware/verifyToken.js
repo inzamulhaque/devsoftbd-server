@@ -7,7 +7,7 @@ const verifyToken = async (req, res, next) => {
     // const token = req.cookies.devsoftbdadmin;
     if (!token) {
       return res.status(401).json({
-        status: "fail",
+        status: false,
         error: "You are not logged in",
       });
     }
