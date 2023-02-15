@@ -104,7 +104,9 @@ exports.getMe = async (req, res) => {
     const { email } = req.user;
     const user = await userService.findUserByEmail(email);
     const { password, ...others } = user.toObject();
-    console.log(user);
+    if (!user) {
+      return res.status(404).json({ status: false, error: "user not found" });
+    }
     res.status(200).json({
       status: true,
       user: others,
