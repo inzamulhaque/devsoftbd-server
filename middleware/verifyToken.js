@@ -19,7 +19,7 @@ const verifyToken = async (req, res, next) => {
     next();
   } catch (error) {
     res.status(403).json({
-      status: "fail",
+      status: false,
       error: "Invalid token",
     });
   }
