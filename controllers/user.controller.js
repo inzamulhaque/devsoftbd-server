@@ -103,10 +103,11 @@ exports.getMe = async (req, res) => {
   try {
     const { email } = req.user;
     const user = await userService.findUserByEmail(email);
+    const { password, ...others } = user.toObject();
     console.log(user);
     res.status(200).json({
       status: true,
-      data: user,
+      user: others,
     });
   } catch (error) {
     res.status(500).json({
