@@ -58,7 +58,7 @@ exports.sendNewsLetter = async (req, res) => {
       secure: true, // true for 465, false for other ports
       auth: {
         user: process.env.EMAIL, // generated ethereal user
-        pass: process.env.email_pass, // generated ethereal password
+        pass: process.env.EMAIL_PASS, // generated ethereal password
       },
     });
 
