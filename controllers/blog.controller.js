@@ -6,6 +6,7 @@ const {
   saveDeleteBlog,
   deleteBlog,
   totalBlogs,
+  searchBlog,
 } = require("../services/blog.services");
 const { findUserByEmail } = require("../services/user.services");
 const blogURL = require("../utils/blogURL");
@@ -209,6 +210,31 @@ exports.totalBlogs = async (req, res) => {
     res.status(200).send({
       status: true,
       count: result,
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: false,
+      error: "Blog not find",
+    });
+  }
+};
+
+exports.searchBlog = async (req, res) => {
+  try {
+    const { keywords } = req.params;
+    const blogs = await searchBlog(keywords);
+
+    if (!blogs) {
+      return res.status(400).send({
+        status: false,
+        error: "Blog not find",
+      });
+    }
+
+    res.status(200).send({
+      status: true,
+      message: "Blog find",
+      blogs,
     });
   } catch (error) {
     res.status(400).send({

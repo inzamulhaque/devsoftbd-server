@@ -43,3 +43,14 @@ exports.deleteBlog = async (id) => {
 exports.totalBlogs = async () => {
   return await Blog.countDocuments({ status: "unseen" });
 };
+
+exports.searchBlog = async (keywords) => {
+  return await Blog.find({
+    $or: [
+      { title: { $regex: keywords } },
+      { metaTitle: { $regex: keywords } },
+      { metaDescription: { $regex: keywords } },
+      { description: { $regex: keywords } },
+    ],
+  }).sort({ createdAt: "descending" });
+};
