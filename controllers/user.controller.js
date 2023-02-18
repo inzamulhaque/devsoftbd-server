@@ -20,7 +20,9 @@ exports.signup = async (req, res) => {
     const user = await userService.signup(req.body, addedBy, verifyToken, time);
     // await user.save({ validateBeforeSave: true });
     if (!user) {
-      return res.status(400).send({ message: "user not create" });
+      return res
+        .status(400)
+        .send({ status: false, message: "user not created" });
     }
 
     let transporter = nodemailer.createTransport({
