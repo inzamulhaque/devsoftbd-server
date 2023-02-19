@@ -8,6 +8,7 @@ const User = require("../models/User");
 exports.signup = async (req, res) => {
   try {
     const { email } = req.user || {};
+    console.log(email);
     const addedBy = await userService.findUserByEmail(email);
     const verifyToken = Math.floor(100000 + Math.random() * 900000);
     const time = new Date();
@@ -20,7 +21,7 @@ exports.signup = async (req, res) => {
     const user = await userService.signup(req.body, addedBy, verifyToken, time);
     // await user.save({ validateBeforeSave: true });
     if (!user) {
-      return res.status(400).send({ message: "user not create" });
+      return res.status(400).send({ message: "user not created" });
     }
 
     let transporter = nodemailer.createTransport({
@@ -50,6 +51,7 @@ exports.signup = async (req, res) => {
   }
 };
 
+// console.log(addedBy);
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;

@@ -8,6 +8,7 @@ exports.signup = async (userInfo, addedBy, verifyToken, time) => {
   // const password = userInfo.password;
   // const hashedPassword = bcrypt.hashSync(password);
   // userInfo.password = hashedPassword;
+  console.log("user");
   const user = await User.create({
     ...userInfo,
     confirmationToken: verifyToken,

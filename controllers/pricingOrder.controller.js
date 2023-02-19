@@ -31,8 +31,65 @@ exports.createOrder = async (req, res) => {
     let info = await transporter.sendMail({
       from: process.env.EMAIL, // sender address
       to: data.email, // list of receivers
-      subject: "thank you", // Subject line
-      html: `<h1>thank you for ordering ${data.package.name}</h1>`, // html body
+      subject: "🙏 Thank you for your order!", // Subject line
+      html: `<div
+        style="padding: 100px;
+          margin: 350px;
+          color: #2C3333;
+          backgroundColor: #E7F6F2;
+          fontFamily:  Arial, sans-serif,
+          fontSize:  16px;
+          borderRadius: 24px;"
+      >
+        <p>
+          Dear <b>recipientName</b> ,
+        </p>
+        <p>
+          Thank you for your recent order from our store. We appreciate your
+          business and are happy to have you as a customer.
+        </p>
+        <p style="margin: 20px 0; font-size: 18px;">Order Details</p>
+        <table style="border-collapse: collapse; width: 100%;">
+          <thead>
+            <tr>
+              <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">
+                Item
+              </th>
+              <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">
+                Quantity
+              </th>
+              <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">
+                Price
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="border: 1px solid #ddd; padding: 8px;">Product 1</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">1</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">$19.99</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid #ddd; padding: 8px;">Product 2</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">2</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">$29.99</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid #ddd; padding: 8px;">Product 3</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">3</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">$39.99</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin: 20px 0;">
+          Your order total is <b>orderTotal</b>. We will send you a separate
+          email with shipping details once your order has shipped.
+        </p>
+        <p>Thank you for your purchase!</p>
+        <p>Sincerely,</p>
+        <p>DevSoftBD Team</p>
+        <p>For farther information, Please Contact : devsoftbd1.com</p>
+      </div>`, // html body
     });
 
     res.status(201).json({ status: true, message: "order created", result });

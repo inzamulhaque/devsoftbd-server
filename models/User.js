@@ -138,3 +138,12 @@ module.exports = User;
 // "email":"mdihalif@gmail.com",
 // "password":"123456"
 // }
+// {
+//   "name":"Sunjida Akter",
+//   "email":"devsoftbd1@gmail.com",
+//   "password":"123456",
+//   "position":"CTO",
+//   "contactNumber":"01777777777",
+//   "imgURL":"gdfhgdfhdh",
+//   "addedBy":{"name":"MD Inzamul Haque","id":"63dbbde60ec2d6a08c153720"}
+// }

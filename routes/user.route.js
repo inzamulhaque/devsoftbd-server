@@ -8,7 +8,7 @@ router.post(
   "/signup",
   verifyApiKey,
   verifyToken,
-  (req, res, next) => auth(req, res, next, "admin"),
+  // (req, res, next) => auth(req, res, next, "admin"),
   userController.signup
 );
 
