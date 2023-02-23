@@ -29,6 +29,12 @@ const deleteblogSchema = mongoose.Schema(
       required: [true, "Meta description is required"],
     },
 
+    metaKeywords: {
+      type: String,
+      trim: true,
+      required: [true, "Meta keywords is required"],
+    },
+
     description: {
       type: String,
       trim: true,
