@@ -16,7 +16,7 @@ router
   .post(verifyApiKey, verifyToken, addTeamMember)
   .get(verifyApiKey, getAllMember);
 
-router.get("/totalmember", verifyApiKey, verifyToken, totalMember);
+router.get("/totalmember", verifyApiKey, totalMember);
 
 router
   .route("/:id")
