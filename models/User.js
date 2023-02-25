@@ -68,11 +68,6 @@ const userSchema = mongoose.Schema(
       ],
     },
 
-    gitURL: {
-      type: String,
-      validate: [validator.isURL, "Please provide a valid github url"],
-    },
-
     imgURL: {
       type: String,
       required: [true, "Please provide Image URL"],
