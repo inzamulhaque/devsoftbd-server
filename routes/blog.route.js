@@ -7,6 +7,7 @@ const {
   deleteBlogByURL,
   totalBlogs,
   searchBlog,
+  allURL,
 } = require("../controllers/blog.controller");
 // const { createBlog } = require("../controllers/blog.controller");
 const verifyApiKey = require("../middleware/apiValidation");
@@ -22,6 +23,8 @@ router
     createBlog
   )
   .get(verifyApiKey, getBlogs);
+
+router.get("/allurl", verifyApiKey, allURL);
 
 router.get("/search/:keywords", verifyApiKey, searchBlog);
 

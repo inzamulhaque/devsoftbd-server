@@ -54,3 +54,7 @@ exports.searchBlog = async (keywords) => {
     ],
   }).sort({ createdAt: "descending" });
 };
+
+exports.allURL = async () => {
+  return await Blog.find().select("url -_id");
+};
